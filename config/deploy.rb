@@ -2,6 +2,7 @@
 lock "~> 3.16.0"
 
 # set ruby version, '3.0.2'
+set :rbenv_ruby, '3.0.2'
 set :ruby_version, '/home/deployer/.rbenv/shims/ruby'
 
 server 'lsa-english-bearriver-app.miserver.it.umich.edu', roles: %w{app db web}, primary: true
