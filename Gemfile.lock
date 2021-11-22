@@ -406,7 +406,7 @@ DEPENDENCIES
   rails (~> 6.0.3.5)
   rspec-rails (~> 3.8)
   sassc (~> 2.4)
-  sd_notify
+  sd_notify (~> 0.1.1)
   simplecov
   simplecov-console
   spring

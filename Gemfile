@@ -76,4 +76,4 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Allows puma to use notify in systemd
-gem "sd_notify"
+gem 'sd_notify', '~> 0.1.1'
