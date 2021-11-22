@@ -65,7 +65,7 @@ group :development do
   # gem 'capistrano3-puma'
   gem 'capistrano-rails',   require: false
   # gem 'capistrano-bundler', require: false
-  # gem 'capistrano-rbenv',   require: false
+  gem 'capistrano-rbenv',   require: false
   # gem 'capistrano-postgresql', require: false
 
   gem 'letter_opener_web'
