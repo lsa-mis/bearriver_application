@@ -62,7 +62,7 @@ group :development do
   gem "binding_of_caller"
   gem 'meta_request'
   gem 'capistrano',         require: false
-  # gem 'capistrano3-puma'
+  gem 'capistrano3-puma'
   gem 'capistrano-rails',   require: false
   # gem 'capistrano-bundler', require: false
   gem 'capistrano-rbenv',   require: false
