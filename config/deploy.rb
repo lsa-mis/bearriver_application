@@ -2,7 +2,7 @@
 lock "~> 3.16.0"
 
 # set ruby version, '3.0.2'
-set :rbenv_type, :user
+# set :rbenv_type, :user
 set :rbenv_ruby, '3.0.2'
 # set :ruby_version, '/home/deployer/.rbenv/shims/ruby'
 
@@ -16,7 +16,7 @@ set :puma_workers,    0
 
 # Don't change these unless you know what you're doing
 set :pty,             true
-set :use_sudo,        false
+# set :use_sudo,        false
 set :stage,           :production
 set :deploy_via,      :remote_cache     
 set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
@@ -26,7 +26,7 @@ set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh
 set :tmp_dir, '/home/deployer/tmp'
 
 # Default value for keep_releases is 5
-set :keep_releases, 2
+set :keep_releases, 3
 
 # Default value for :linked_files and linked_dirs is []
 set :linked_files, %w{config/puma.rb config/nginx.conf config/master.key config/puma.service}
