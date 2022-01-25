@@ -85,7 +85,7 @@ Rails.application.configure do
 
 
   # Devise setting - Ensure you have defined default url options
-  config.action_mailer.default_url_options = { host: 'lsa-english-bearriver.miserver.it.umich.edu' }
+  config.action_mailer.default_url_options = { host: 'bearriver-application.english.lsa.umich.edu' }
 
   config.action_mailer.perform_caching = false
 
