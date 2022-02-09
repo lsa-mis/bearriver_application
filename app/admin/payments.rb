@@ -1,5 +1,5 @@
 ActiveAdmin.register Payment do
-  actions :index, :show, :create, :new, :edit
+  actions :index, :show, :create, :new
   menu parent: "User Mangement", priority: 4
 
   # See permitted parameters documentation:
