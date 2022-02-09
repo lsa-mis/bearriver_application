@@ -65,7 +65,7 @@ class ApplicationSettingsController < ApplicationController
   def run_lottery
     if (current_application_settings.opendate + current_application_settings.application_open_period.hours) < Time.now
       if current_application_settings.lottery_result.nil?
-        active_applications_ids = Application.active_conference_applications.pluck(:id)
+        active_applications_ids = Application.entries_included_in_lottery.pluck(:id)
         3.times { active_applications_ids.shuffle! }
         current_application_settings.update(lottery_result: active_applications_ids, lottery_run_date: Time.now)
 
