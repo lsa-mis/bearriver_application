@@ -95,6 +95,8 @@ class Application < ApplicationRecord
 
   scope :active_conference_applications, -> { where("conf_year = ?", ApplicationSetting.get_current_app_settings.contest_year) }
 
+  scope :entries_included_in_lottery, -> {active_conference_applications.where.not("offer_status = ?", "not_offered") }
+
   scope :application_accepted, -> { active_conference_applications.where("offer_status = ?", "registration_accepted") }
 
   scope :application_offered, -> { active_conference_applications.where("offer_status = ?", "registration_offered") }
