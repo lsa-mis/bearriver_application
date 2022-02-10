@@ -3,7 +3,7 @@
 %h2 Your Payment Receipts
 - if user_has_payments?(current_user) # && user has offer
   %p.m-2
-    = current_application_settings.payments_directions 
+    = raw(current_application_settings.payments_directions)
   %p
     Pay by Credit Card (Visa, Mastercard, Discover, AMEX)
     %small.text-muted 
