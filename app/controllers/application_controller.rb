@@ -28,6 +28,16 @@ class ApplicationController < ActionController::Base
 
     helper_method :user_has_application?
 
+    def user_has_special_payment?(user)
+      if Payment.current_conference_payments.where(user_id: user).where(account_type: ["scholarship", "Scholarship"] ).any?
+        true
+      else
+        false
+      end
+    end
+
+    helper_method :user_has_special_payment?
+
     def user_has_payments?(user)
       # return true unless Payment.find_by(user_id: user).nil?
       if Payment.current_conference_payments.find_by(user_id: user).nil?
