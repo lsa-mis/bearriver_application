@@ -58,6 +58,14 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
       end
+
+      column do
+        panel "Resources" do
+          ul do
+            li link_to('Admin Documentation', 'https://docs.google.com/document/d/1_FS9pUxsBbl7o8tDFY9-15XcwpqBMzsZFhGoJQLMwVg/edit?usp=sharing', :target => "_blank")
+          end
+        end
+      end
     end # columns
   end # content
 end
