@@ -58,7 +58,7 @@
             = "Transaction ID: #{payment.transaction_id}"
           %ul.list-group.list-group-flush
             %li.list-group-item
-              = "Credit Card: #{payment.account_type}"
+              = "Payment Method: #{payment.account_type}"
             %li.list-group-item{:class => ('text-danger' unless payment.transaction_status === "1")}
               Message:
               %br
