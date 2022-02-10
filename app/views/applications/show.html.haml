@@ -112,8 +112,7 @@
 - if @application.offer_status.blank?
   %h6
     NOTE:
-    %small.text-muted If you need to make a correction, please use the edit
-    button below to return to the form.
+    %small.text-muted If you need to make a correction, please use the edit button below to return to the form.
   = link_to 'Edit', edit_application_path(@application), class: 'btn btn-sm btn-warning'
 
   -# %hr
@@ -127,7 +126,12 @@
       use the option below to cancel your registration.
 
   -# = link_to 'Cancel', root_path, class: 'btn btn-danger'
-  = link_to 'Delete', application_path(@application), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+  = link_to 'Delete', application_path(@application), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+
+  %hr
+  %h6
+    Confirm Registration
+  = link_to 'Confirm', root_path, class: 'btn btn-success'
 
 - else
   %h6.mt-4

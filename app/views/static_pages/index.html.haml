@@ -5,7 +5,7 @@
   = "Time Now #{Time.now.to_s(:special_date)}"
 
 - if current_application_settings.application_open_directions.present?
-  = current_application_settings.application_open_directions
+  = raw(current_application_settings.application_open_directions)
   %br
   %br
 

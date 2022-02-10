@@ -25,10 +25,10 @@
             You may use the links in the 'Your Details' box to the right to view or manage your payments.
       - else
         - if current_application_settings.application_closed_directions.present?
-          = current_application_settings.application_closed_directions
+          = raw(current_application_settings.application_closed_directions)
     - else
       - if current_application_settings.application_closed_directions.present?
-        = current_application_settings.application_closed_directions
+        = raw(current_application_settings.application_closed_directions)
 
   %br
   %br

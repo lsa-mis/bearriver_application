@@ -1,6 +1,6 @@
 %h2 Michigan Quarterly Review Subscription
 %p
-  = current_application_settings.subscription_directions
+  = raw(current_application_settings.subscription_directions)
 
   = form_for @application do |f|
     .h6
