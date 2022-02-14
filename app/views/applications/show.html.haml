@@ -2,18 +2,22 @@
   %h3 Confirm your information
 - else
   %h3 Your Application
-  %h6.mt-4
-    Thank you for your Bear River Writers' Conference application. You will
-    will recieve an email after the close of the Application Window notifiying
-    if you have been admitted to the conference.
-  %h6.mt-4
-    If your application is accepted, in March,
-    you will be emailed with your workshop and housing placement. You will also
-    be sent a prompt to continue paying your conference dues at that time.
-    
-    %pr 
-      You may email any questions to:
-      = mail_to "bearriver-questions@umich.edu"
+  - if @application.offer_status.blank? || @application.offer_status == "not_offered"
+    %h6.mt-4
+      Thank you for your Bear River Writers' Conference application. You will
+      will recieve an email after the close of the Application Window notifiying
+      if you have been admitted to the conference.
+    %h6.mt-4
+      If your application is accepted, in March,
+      you will be emailed with your workshop and housing placement. You will also
+      be sent a prompt to continue paying your conference dues at that time.
+  - else
+    %h6.mt-4
+      In March you will be emailed with your workshop and housing placement. You will also
+      be sent a prompt to continue paying your conference dues at that time.
+  %pr 
+    You may email any questions to:
+    = mail_to "bearriver-questions@umich.edu"
 
 %hr.w-75
 .h5 Registration Details:
