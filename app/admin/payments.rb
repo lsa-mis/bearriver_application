@@ -81,7 +81,7 @@ ActiveAdmin.register Payment do
       f.input :transaction_id, as: :hidden, :input_html => { value: DateTime.now.iso8601 + "_" + current_admin_user.email } # DateTime.now.iso8601 + current_admin_user.email
       f.input :total_amount # 10000 => 100.00
       f.input :transaction_date, as: :datepicker # DateTime.now.iso8601
-      f.input :account_type, label: "Enter Check# or Transaction#" # 'Check #xxxx'
+      f.input :account_type
       f.input :result_code, as: :hidden, :input_html => { value: "Manually Entered" } # 'Manually Entered'
       f.input :result_message, as: :hidden, :input_html => { value: "This was manually entered by #{current_admin_user.email}" } # "This was manually entered by #{current_admin_user} for #{:user.email}"
       #f.input :user_account # :user.email + '-' + :user.id
