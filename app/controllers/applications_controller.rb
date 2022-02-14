@@ -38,7 +38,10 @@ class ApplicationsController < ApplicationController
     @application.user = current_user
     respond_to do |format|
       if @application.save
-        format.html { redirect_to @application, notice: 'Confirm Your Application Details.' }
+        if (["special", "scholarship", "Special", "Scholarship"] & current_user.payments.current_conference_payments.pluck(:account_type)).any?
+            @application.update(offer_status: 'registration_accepted')
+        end
+        format.html { redirect_to @application, notice: 'Your Application Details.' }
         format.json { render :show, status: :created, location: @application }
       else
         format.html { render :new }
