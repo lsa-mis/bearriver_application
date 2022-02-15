@@ -16,8 +16,8 @@ ActiveAdmin.register Payment do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-
-  filter :user, as: :select
+  
+  filter :user, as: :select, collection: -> { User.all.order(:email) }
   index do
     selectable_column
     actions

@@ -62,7 +62,7 @@ class Application < ApplicationRecord
   belongs_to :user
 
   def name
-    "#{first_name} #{last_name}"
+    "#{last_name}, #{first_name}"
   end
 
   def display_name
