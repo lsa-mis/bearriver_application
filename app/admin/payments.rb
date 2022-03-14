@@ -47,7 +47,10 @@ ActiveAdmin.register Payment do
 
   show do
     attributes_table do
-      row :user
+      row :user do |user| 
+        app = payment.user.applications.find_by(conf_year: ApplicationSetting.get_current_app_year)
+        link_to(app.display_name, admin_application_path(app))
+      end
       row :conf_year
       row :transaction_type
       row :transaction_status
@@ -73,22 +76,44 @@ ActiveAdmin.register Payment do
   form do |f|
     f.semantic_errors
     f.inputs "Payment" do
-      f.input :user
+      # f.input :user
+      if params[:user_id]
+        li "<strong>Application: #{Application.find(params[:user_id]).display_name}</strong>".html_safe
+        f.input :user_id, input_html: {value: Application.find(params[:user_id]).user_id} #, as: :hidden
+      else
+        f.input :user_id, as: :select, collection: Application.active_conference_applications.map { |appl| [appl.display_name, appl.user_id]}.sort 
+      end
       li "Conf Year #{f.object.conf_year}" unless f.object.new_record?
       f.input :conf_year, input_html: {value: ApplicationSetting.get_current_app_year} unless f.object.persisted?
       f.input :transaction_type, as: :hidden, :input_html => { value: "ManuallyEntered" } # ManualEntry
       f.input :transaction_status, as: :hidden, :input_html => { value: "1" } # 1
       f.input :transaction_id, as: :hidden, :input_html => { value: DateTime.now.iso8601 + "_" + current_admin_user.email } # DateTime.now.iso8601 + current_admin_user.email
-      f.input :total_amount # 10000 => 100.00
+      f.input :total_amount, label: "Total amount in cents" # 10000 => 100.00
       f.input :transaction_date, as: :datepicker # DateTime.now.iso8601
-      f.input :account_type
+      f.input :account_type, collection: ['scholarship', 'special', 'other']
       f.input :result_code, as: :hidden, :input_html => { value: "Manually Entered" } # 'Manually Entered'
-      f.input :result_message, as: :hidden, :input_html => { value: "This was manually entered by #{current_admin_user.email}" } # "This was manually entered by #{current_admin_user} for #{:user.email}"
-      #f.input :user_account # :user.email + '-' + :user.id
-      #f.input :payer_identity # :user.email
+      f.input :result_message, as: :hidden, :input_html => { value: "This was manually entered by #{current_admin_user.email}" }
       f.input :timestamp, as: :hidden, :input_html => { value: DateTime.now.strftime("%Q").to_i } # DateTime.now.strftime("%Q").to_i
     end
-    #f.actions
     f.actions
+  end
+
+  csv do
+    column :user
+    column :conf_year
+    column :transaction_type
+    column "total_amount" do |amount|
+      number_to_currency(amount.total_amount.to_f / 100)
+    end
+    column :transaction_status
+    column :transaction_date
+    column :account_type
+    column :result_code
+    column :result_message
+    column :created_at
+    column :updated_at
+    column "Comments" do |payment|
+      ActiveAdmin::Comment.where(resource_type: 'Payment', resource_id: payment).pluck(:body)
+    end
   end
 end
