@@ -44,6 +44,20 @@ ActiveAdmin.register Application do
     column :conf_year
     column :lottery_position
     column :offer_status
+    column "Balance Due" do |application|
+      users_current_payments = Payment.current_conference_payments.where(user_id: application.user_id)
+      ttl_paid = Payment.current_conference_payments.where(user_id: application.user_id, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+      cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
+      cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
+      if application.subscription
+        subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
+      else
+        subscription = 0
+      end
+      total_cost = cost_lodging + cost_partner
+      balance_due = total_cost + subscription - ttl_paid
+      number_to_currency(balance_due)
+    end
     column :subscription
     column :first_name
     column :last_name
@@ -74,6 +88,29 @@ ActiveAdmin.register Application do
   end
 
   show do
+
+    users_current_payments = Payment.current_conference_payments.where(user_id: application.user_id)
+    ttl_paid = Payment.current_conference_payments.where(user_id: application.user_id, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+    cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
+    cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
+    if application.subscription
+      subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
+    else
+      subscription = 0
+    end
+    total_cost = cost_lodging + cost_partner
+    balance_due = total_cost + subscription - ttl_paid
+    panel "Payment Activity -- [Balance Due: #{number_to_currency(balance_due)} Total Cost: #{number_to_currency(total_cost)}]" do
+      table_for application.user.payments.current_conference_payments do
+        column(:id) { |aid| link_to(aid.id, admin_payment_path(aid.id)) }
+        column(:account_type) { |atype| atype.account_type.titleize }
+        column(:transaction_date) {|td| Date.parse(td.transaction_date) }
+        column(:total_amount) { |ta|  number_to_currency(ta.total_amount.to_f / 100) }
+      end
+      text_node link_to("[Add Manual Payment]", new_admin_payment_path(:user_id => application))
+    end
+
+    
     attributes_table do
       row :user
       row :conf_year
@@ -148,4 +185,57 @@ ActiveAdmin.register Application do
     end
     f.actions
   end
+
+  csv do
+    column :user do |application|
+      application.name
+    end
+    column :email
+    column :conf_year
+    column :lottery_position
+    column :offer_status
+    column "Balance Due" do |application|
+      users_current_payments = Payment.current_conference_payments.where(user_id: application.user_id)
+      ttl_paid = Payment.current_conference_payments.where(user_id: application.user_id, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+      cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
+      cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
+      if application.subscription
+        subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
+      else
+        subscription = 0
+      end
+      total_cost = cost_lodging + cost_partner
+      balance_due = total_cost + subscription - ttl_paid
+      number_to_currency(balance_due)
+    end
+    column :subscription
+    column :first_name
+    column :last_name
+    column :gender
+    column :workshop_selection1
+    column :workshop_selection2
+    column :workshop_selection3
+    column :lodging_selection
+    column :partner_registration_selection
+    column :birth_year
+    column :street
+    column :street2
+    column :city
+    column :state
+    column :zip
+    column :country
+    column :phone
+    column :email
+    column :email_confirmation
+    column :partner_first_name
+    column :partner_last_name
+    column :how_did_you_hear
+    column :accessibility_requirements
+    column :special_lodging_request
+    column :food_restrictions
+    column :result_email_sent
+    column :offer_status_date
+  end
+
+
 end
