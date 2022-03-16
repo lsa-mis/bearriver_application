@@ -76,13 +76,7 @@ ActiveAdmin.register Payment do
   form do |f|
     f.semantic_errors
     f.inputs "Payment" do
-      # f.input :user
-      if params[:user_id]
-        li "<strong>Application: #{Application.find(params[:user_id]).display_name}</strong>".html_safe
-        f.input :user_id, input_html: {value: Application.find(params[:user_id]).user_id} #, as: :hidden
-      else
-        f.input :user_id, as: :select, collection: Application.active_conference_applications.map { |appl| [appl.display_name, appl.user_id]}.sort 
-      end
+      f.input :user
       li "Conf Year #{f.object.conf_year}" unless f.object.new_record?
       f.input :conf_year, input_html: {value: ApplicationSetting.get_current_app_year} unless f.object.persisted?
       f.input :transaction_type, as: :hidden, :input_html => { value: "ManuallyEntered" } # ManualEntry
