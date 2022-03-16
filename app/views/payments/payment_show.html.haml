@@ -1,8 +1,5 @@
 - provide(:title, 'Payment Receipts')
 
-%p.p-2.border.border-danger.bg-warning
-  NOTICE: Our credit card processing service will be updating their environment this Tuesday (3/15) night through Wednesday (3/16) morning.  During this time, credit card transactions will not be able to be processed.
-
 %h2 Your Payment Receipts
 - if user_has_payments?(current_user) # && user has offer
   %p.m-2
