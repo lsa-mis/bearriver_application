@@ -21,7 +21,7 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         panel "Recent #{ApplicationSetting.get_current_app_year} Applications" do
-          table_for Application.active_conference_applications.order("id desc").limit(10).each do |app|
+          table_for Application.active_conference_applications.sort.reverse.first(10) do
             column(:id) { |app| link_to(app.name, admin_application_path(app)) }
           end
         end
@@ -29,17 +29,16 @@ ActiveAdmin.register_page "Dashboard" do
 
       column do
         panel "Recent Payments" do
-          table_for Payment.current_conference_payments.limit(10) do
-            column("User") { |u| link_to(u.user.email, admin_user_path(u.user)) }
-            column("Amount") { |order| number_to_currency order.total_amount.to_f / 100 }
-            
+          table_for Payment.current_conference_payments.sort.reverse.first(10) do
+            column("User") { |u| link_to(u.user.email, admin_payment_path(u)) }
+            column("Amount") { |a| number_to_currency a.total_amount.to_f / 100 }
           end
         end
       end
 
       column do
         panel "Recent Users" do
-          table_for User.order("id desc").limit(10).each do |user|
+          table_for User.all.sort.reverse.first(10) do
             column(:email) { |user| link_to(user.email, admin_user_path(user)) }
           end
         end
@@ -49,7 +48,7 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         panel "#{ApplicationSetting.get_current_app_year} Applicants who accepted their registration offer (#{Application.application_accepted.count})" do
-          table_for Application.application_accepted.order("id desc").limit(110) do
+          table_for Application.application_accepted.sort.reverse do
             column("User") { |u| link_to(u.user.email, admin_application_path(u.id)) }
             column("Offer Date") { |od| od.offer_status_date }
           end
@@ -58,7 +57,7 @@ ActiveAdmin.register_page "Dashboard" do
 
       column do
         panel "Waiting for responses from these #{ApplicationSetting.get_current_app_year} applicants (#{Application.application_offered.count})" do
-          table_for Application.application_offered.order("id desc").limit(50) do
+          table_for Application.application_offered.sort.reverse do
             column("User") { |u| link_to(u.user.email, admin_application_path(u.id)) }
             column("Offer Date") { |od| od.offer_status_date }
           end
