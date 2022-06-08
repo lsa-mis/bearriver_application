@@ -2,10 +2,11 @@
   require 'time'
 
   class PaymentsController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:payment_receipt]
-    before_action :authenticate_user!
+    skip_before_action :verify_authenticity_token, only: [:payment_receipt, :delete_manual_payment]
+    before_action :authenticate_user!, except: [:delete_manual_payment]
     before_action :current_user, only: %i[payment_receipt make_payment payment_show]
     before_action :current_application, only: %i[payment_receipt payment_show]
+    before_action :authenticate_admin_user!, only: [:delete_manual_payment]
 
     def index
       redirect_to root_url
@@ -54,6 +55,15 @@
       end
       @total_cost = cost_lodging + cost_partner
       @balance_due = @total_cost + @cost_subscription - @ttl_paid
+    end
+
+    def delete_manual_payment
+      @payment = Payment.find(params[:id])
+      @payment.destroy
+      respond_to do |format|
+        format.html { redirect_to admin_payments_url, notice: 'Payment was successfully deleted.' }
+        format.json { head :no_content }
+      end
     end
 
     private
