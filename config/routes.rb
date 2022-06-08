@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'make_payment', to: 'payments#make_payment'
   post 'make_payment', to: 'payments#make_payment'
 
+  post 'delete_manual_payment/:id', to: 'payments#delete_manual_payment', as: :delete_manual_payment
+
   post 'run_lotto', to: 'application_settings#run_lottery'
 
   post '/send_offer/:id', to: 'application_settings#send_offer', as: 'send_offer'
