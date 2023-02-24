@@ -68,7 +68,7 @@ ActiveAdmin.register ApplicationSetting do
       row :opendate
       row "# of hours to keep app open", &:application_open_period
       row :application_buffer
-      row "Conference Year", :contest_year
+      row "Conference Year", &:contest_year
       row :time_zone
       row :allow_payments
       row :active_application
