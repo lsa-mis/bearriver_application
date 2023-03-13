@@ -1,4 +1,4 @@
-# Bear River Writers' Conference Registration
+# Bear River Writers' Conference Application
 Allows individuals to register for the Bear River Writers conference held at the University of Michigan every year. It consists of an application and a payment system with receipts.
 
 ## Getting Started

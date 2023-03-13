@@ -47,7 +47,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "#{ApplicationSetting.get_current_app_year} Applicants who accepted their registration offer (#{Application.application_accepted.count})" do
+        panel "#{ApplicationSetting.get_current_app_year} Applicants who accepted their offer (#{Application.application_accepted.count})" do
           table_for Application.application_accepted.sort.reverse do
             column("User") { |u| link_to(u.user.email, admin_application_path(u.id)) }
             column("Offer Date") { |od| od.offer_status_date }
