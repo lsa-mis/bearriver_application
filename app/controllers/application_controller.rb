@@ -53,4 +53,23 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :payments_open?
+
+  def get_workshops
+    @workshops_available =  Workshop.all.order_by_lastname
+  end
+
+  helper_method :get_workshops
+
+  def get_lodgings
+    @lodgings = Lodging.all
+  end
+
+  helper_method :get_lodgings
+
+  def get_partner_registrations
+    @partner_registrations = PartnerRegistration.all.order(cost: :asc)
+  end
+
+  helper_method :get_partner_registrations
+
 end
