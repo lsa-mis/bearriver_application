@@ -20,7 +20,14 @@ ActiveAdmin.register Payment do
   #   permitted
   # end
   
-  filter :user, as: :select, collection: -> { User.all.order(:email) }
+  # filter :user, as: :select, collection: -> { User.all.order(:email) }
+  # filter user.current_application, label: "Last Name (Starts with)"
+  # filter :application_first_name_start, label: "First Name (Starts with)"
+  # filter :conf_year, as: :select
+  filter :user, 
+    collection: -> { Application.active_conference_applications.order(:last_name) },
+    label: "Name"
+
   index do
     selectable_column
     actions
