@@ -4,13 +4,13 @@
   Dear Writers:
   %br
   - if current_application_settings.opendate > Time.now
-    = "Registration for the #{current_application_settings.contest_year} conference will be open:"
+    = "Application for the #{current_application_settings.contest_year} conference will be open:"
     %p.m-3
       = current_application_settings.opendate.to_s(:special_date)
       until
-      = (current_application_settings.opendate + 2.days).to_s(:special_date)
+      = (current_application_settings.opendate + current_application_settings.application_open_period.hours).to_s(:special_date)
     Please return to the
-    = link_to "registration page", root_url
+    = link_to "Application Page", root_url
     after that date and time.
 
   - else
