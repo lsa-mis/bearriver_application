@@ -107,15 +107,15 @@
   %hr
   .form-group.row
     = f.label :workshop_selection1, "First Choice", class: 'col-sm-4 col-form-label required'
-    = f.collection_select(:workshop_selection1, Workshop.all.order_by_lastname, :instructor, :instructor,
+    = f.collection_select(:workshop_selection1, get_workshops, :instructor, :instructor,
                           prompt: "Pick one")
   .form-group.row
     = f.label :workshop_selection2, "Second Choice", class: 'col-sm-4 col-form-label required'
-    = f.collection_select(:workshop_selection2, Workshop.all, :instructor, :instructor,
+    = f.collection_select(:workshop_selection2, get_workshops, :instructor, :instructor,
                           prompt: "Pick one")
   .form-group.row
     = f.label :workshop_selection3, "Third Choice", class: 'col-sm-4 col-form-label required'
-    = f.collection_select(:workshop_selection3, Workshop.all, :instructor, :instructor,
+    = f.collection_select(:workshop_selection3, get_workshops, :instructor, :instructor,
                           prompt: "Pick one")
 
   %h5 Lodging Selection:
@@ -123,7 +123,7 @@
   .h6
     = f.label 'Please select a room type:', class: 'required'
   .form-group
-    = f.collection_radio_buttons(:lodging_selection, Lodging.all, :description, :description) do |b|
+    = f.collection_radio_buttons(:lodging_selection, get_lodgings, :description, :description) do |b|
       .form-check
       = b.radio_button(class: "form-check-input ml-3")
       = b.label(class: "form-check-label  ml-5")
@@ -131,7 +131,7 @@
   .h6
     = f.label 'Please indicate whether your registration includes a spouse/partner:', class: 'required'
   .form-group
-    = f.collection_radio_buttons(:partner_registration_selection, @partner_registrations.order(cost: :asc), :description, :description) do |b|
+    = f.collection_radio_buttons(:partner_registration_selection, get_partner_registrations , :description, :description) do |b|
       .form-check
       = b.radio_button(class: "form-check-input ml-3")
       = b.label(class: "form-check-label  ml-5")
@@ -140,10 +140,10 @@
   .form-row
     .form-group.col-4.offset-1
       = f.label :partner_first_name
-      = f.text_field :partner_first_name, class: 'form-control'
+      = f.text_field :partner_first_name, class: 'form-control', :required => true
     .form-group.col-4
       = f.label :partner_last_name
-      = f.text_field :partner_last_name, class: 'form-control'
+      = f.text_field :partner_last_name, class: 'form-control', :required => true
 
   %h5 Additional Information:
   %hr
@@ -170,3 +170,55 @@
 
   .actions
     = f.submit 'Submit', class: 'btn btn-success'
+
+:javascript
+  $( document ).ready(function() {
+    $('#application_workshop_selection1').on('change', function() {
+      $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
+      $( "option" ).remove( "#application_workshop_selection3 > :contains(" + this.value + ")" );
+    });
+
+    $('#application_workshop_selection2').on('change', function() {
+      $( "option" ).remove( "#application_workshop_selection1 > :contains(" + this.value + ")" );
+      $( "option" ).remove( "#application_workshop_selection3 > :contains(" + this.value + ")" );
+    });
+
+    $('#application_workshop_selection3').on('change', function() {
+      $( "option" ).remove( "#application_workshop_selection1 > :contains(" + this.value + ")" );
+      $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
+    });
+
+    $('#application_partner_registration_selection_i_am_attending_the_conference_alone_').on('change', function() {
+      if($(this).prop("checked") == true) {
+        $( '#application_partner_first_name').attr("required", false);
+        $( '#application_partner_last_name').attr("required", false);
+      }
+    });
+
+    if($('#application_partner_registration_selection_i_am_attending_the_conference_alone_').prop('checked') == true) {
+      $( '#application_partner_first_name').attr("required", false);
+      $( '#application_partner_last_name').attr("required", false);
+    };
+
+    $('#application_partner_registration_selection_my_spousepartner_will_be_registering_separately_for_the_conference_and_workshops_').on('change', function() {
+      if($(this).prop("checked") == true) {
+        $( '#application_partner_first_name').attr("required", true);
+        $( '#application_partner_last_name').attr("required", true);
+      }
+    });
+
+    $('#application_partner_registration_selection_my_spousepartner_will_not_be_attending_the_workshops_but_will_attend_the_conference').on('change', function() {
+      if($(this).prop("checked") == true) {
+        $( '#application_partner_first_name').attr("required", true);
+        $( '#application_partner_last_name').attr("required", true);
+      }
+    });
+
+    $('#application_partner_registration_selection_my_spousepartner_will_not_be_attending_the_workshops_but_will_attend_the_conference_and_readings').on('change', function() {
+      if($(this).prop("checked") == true) {
+        $( '#application_partner_first_name').attr("required", true);
+        $( '#application_partner_last_name').attr("required", true);
+      }
+    });
+
+  })
