@@ -1,5 +1,5 @@
 - if @application.user.payments.size < 1
-  %h3 Confirm your information
+  %h3 Confirm your information then click <span class= 'btn-sm btn-success disabled'>Confirm</span> below.
 - else
   %h3 Your Application
   - if @application.offer_status.blank? || @application.offer_status == "not_offered"
