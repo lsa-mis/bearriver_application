@@ -41,7 +41,8 @@ class ApplicationsController < ApplicationController
         if (["special", "scholarship", "Special", "Scholarship"] & current_user.payments.current_conference_payments.pluck(:account_type)).any?
             @application.update(offer_status: 'registration_accepted')
         end
-        format.html { redirect_to @application, notice: 'Your Application Details.' }
+        AppConfirmationMailer.with(app: current_user.current_conf_application).application_submitted.deliver_now
+        format.html { redirect_to @application, notice: 'Here are your Application Details.' }
         format.json { render :show, status: :created, location: @application }
       else
         format.html { render :new }
