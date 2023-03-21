@@ -28,7 +28,11 @@ class User < ApplicationRecord
   has_many :applications, dependent: :destroy
 
   def total_paid
-    payments.pluck(:total_amount).map{ |v| v.to_f }.sum / 100
+    payments.current_conference_payments.pluck(:total_amount).map{ |v| v.to_f }.sum / 100
+  end
+
+  def current_conf_application
+    applications.active_conference_applications.last
   end
 
   def total_cost
