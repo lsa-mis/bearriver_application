@@ -9,8 +9,7 @@ class ApplicationController < ActionController::Base
 
   def current_application_open?
     if current_application_settings
-      application_opens = current_application_settings.opendate
-      range = application_opens..(application_opens + 2.days)
+      range = current_application_settings.opendate..(current_application_settings.opendate + current_application_settings.application_open_period.hours)
       range.include?(Time.now)
     end
   end
