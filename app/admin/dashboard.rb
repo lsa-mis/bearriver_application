@@ -22,7 +22,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent #{ApplicationSetting.get_current_app_year} Applications" do
           table_for Application.active_conference_applications.sort.reverse.first(10) do
-            column(:id) { |app| link_to(app.name, admin_application_path(app)) }
+            column(:id) { |app| link_to(app.display_name, admin_application_path(app)) }
           end
         end
       end
@@ -30,25 +30,19 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Payments" do
           table_for Payment.current_conference_payments.sort.reverse.first(10) do
-            column("User") { |u| link_to(u.user.email, admin_payment_path(u)) }
+            column("Name") { |a| link_to(a.user.current_conf_application.display_name, admin_payment_path(a)) }
             column("Amount") { |a| number_to_currency a.total_amount.to_f / 100 }
           end
         end
       end
 
-      column do
-        panel "Recent Users" do
-          table_for User.all.sort.reverse.first(10) do
-            column(:email) { |user| link_to(user.email, admin_user_path(user)) }
-          end
-        end
-      end
     end
 
     columns do
       column do
         panel "#{ApplicationSetting.get_current_app_year} Applicants who accepted their offer (#{Application.application_accepted.count})" do
           table_for Application.application_accepted.sort.reverse do
+            column("Name") {|a| a.display_name }
             column("User") { |u| link_to(u.user.email, admin_application_path(u.id)) }
             column("Offer Date") { |od| od.offer_status_date }
           end
