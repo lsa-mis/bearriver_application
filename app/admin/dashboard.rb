@@ -3,11 +3,7 @@ ActiveAdmin.register_page "Dashboard" do
 
   
   content title: proc { I18n.t("active_admin.dashboard") } do
-    div do
-      span do
-        link_to('Admin Documentation', 'https://docs.google.com/document/d/1_FS9pUxsBbl7o8tDFY9-15XcwpqBMzsZFhGoJQLMwVg/edit?usp=sharing', :target => "_blank")
-      end
-    end
+
     if (current_application_settings.opendate + current_application_settings.application_open_period.hours) < Time.now
       if current_application_settings.lottery_result.nil?
         div do
@@ -58,5 +54,10 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
     end # columns
+    div do
+      span do
+        link_to 'Admin Documentation', 'https://docs.google.com/document/d/1_FS9pUxsBbl7o8tDFY9-15XcwpqBMzsZFhGoJQLMwVg/edit?usp=sharing', target: '_blank', class: 'btn'
+      end
+    end
   end # content
 end
