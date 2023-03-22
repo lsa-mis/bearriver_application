@@ -7,7 +7,7 @@ ActiveAdmin.register ApplicationSetting do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :opendate, :application_buffer, :contest_year, :time_zone, :allow_payments, :active_application, :allow_lottery_winner_emails, :allow_lottery_loser_emails, :registration_fee, :lottery_buffer, :application_open_directions, :application_closed_directions, :application_open_period, :registration_acceptance_directions, :payments_directions, :lottery_won_email, :lottery_lost_email, :subscription_cost, :subscription_directions
+  permit_params :opendate, :application_buffer, :contest_year, :time_zone, :allow_payments, :active_application, :allow_lottery_winner_emails, :allow_lottery_loser_emails, :registration_fee, :lottery_buffer, :application_open_directions, :application_closed_directions, :application_open_period, :registration_acceptance_directions, :special_scholarship_acceptance_directions, :payments_directions, :lottery_won_email, :lottery_lost_email, :subscription_cost, :subscription_directions
   #
   # or
   #
@@ -45,6 +45,9 @@ ActiveAdmin.register ApplicationSetting do
     end
     column "registration_acceptance_directions" do |reg_text|
       reg_text.registration_acceptance_directions[0..50] + "..." unless reg_text.registration_acceptance_directions.nil?
+    end
+    column "special_scholarship_acceptance_directions" do |schol_text|
+      schol_text.special_scholarship_acceptance_directions[0..50] + "..." unless schol_text.special_scholarship_acceptance_directions.nil?
     end
     column "payments_directions" do |pay_text|
       pay_text.payments_directions[0..50] + "..." unless pay_text.payments_directions.nil?
@@ -86,6 +89,7 @@ ActiveAdmin.register ApplicationSetting do
       row :application_open_directions
       row :application_closed_directions
       row :registration_acceptance_directions
+      row :special_scholarship_acceptance_directions
       row :payments_directions
       row :subscription_directions
       row :lottery_won_email
@@ -111,6 +115,7 @@ ActiveAdmin.register ApplicationSetting do
       f.input :application_open_directions
       f.input :application_closed_directions
       f.input :registration_acceptance_directions
+      f.input :special_scholarship_acceptance_directions
       f.input :payments_directions
       f.input :subscription_directions
 

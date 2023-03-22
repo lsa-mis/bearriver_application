@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_193506) do
+ActiveRecord::Schema.define(version: 2023_03_22_132609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_193506) do
     t.text "lottery_lost_email"
     t.integer "subscription_cost", default: 0, null: false
     t.text "subscription_directions"
+    t.text "special_scholarship_acceptance_directions"
   end
 
   create_table "applications", force: :cascade do |t|
