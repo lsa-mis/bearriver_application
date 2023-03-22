@@ -90,7 +90,7 @@ ActiveAdmin.register Payment do
   form do |f|
     f.semantic_errors
     f.inputs "Payment" do
-      f.input :user, as: :select, :collection => Application.active_conference_applications.map { |a| ["#{a.display_name}", a.user_id] }.sort # User.all.map { |u| ["#{u.email}", u.id] }.sort 
+      f.input :user, as: :select, :collection => User.all.map { |u| ["#{u.email}", u.id] }.sort  # Application.active_conference_applications.map { |a| ["#{a.display_name}", a.user_id] }.sort
       li "Conf Year #{f.object.conf_year}" unless f.object.new_record?
       f.input :conf_year, input_html: {value: ApplicationSetting.get_current_app_year} unless f.object.persisted?
       f.input :transaction_type, as: :hidden, :input_html => { value: "ManuallyEntered" } # ManualEntry
