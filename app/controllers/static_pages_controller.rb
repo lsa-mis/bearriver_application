@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   # before_action :current_application_open?, only: [:index]
+  before_action :authenticate_user!, only: [ :special_scholarship ]
 
   def index
     redirect_to conference_closed_url unless current_application_open?
@@ -28,5 +29,9 @@ class StaticPagesController < ApplicationController
       redirect_to root_url
     end
   end
+
+  def special_scholarship
+    redirect_to root_url unless ["scholarship", "special"].include? current_user.payments.current_conference_payments.pluck(:account_type)
+  end 
 
 end
