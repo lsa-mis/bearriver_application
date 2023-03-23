@@ -45,8 +45,8 @@ ActiveAdmin.register Application do
     column :lottery_position
     column :offer_status
     column "Balance Due" do |application|
-      users_current_payments = Payment.current_conference_payments.where(user_id: application.user_id)
-      ttl_paid = Payment.current_conference_payments.where(user_id: application.user_id, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+      users_current_payments = Payment.where(user_id: application.user_id, conf_year: application.conf_year)
+      ttl_paid = Payment.where(user_id: application.user_id, conf_year: application.conf_year, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
       cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
       cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
       if application.subscription
@@ -89,8 +89,8 @@ ActiveAdmin.register Application do
 
   show do
 
-    users_current_payments = Payment.current_conference_payments.where(user_id: application.user_id)
-    ttl_paid = Payment.current_conference_payments.where(user_id: application.user_id, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
+    users_current_payments = Payment.where(user_id: application.user_id, conf_year: application.conf_year) # Payment.current_conference_payments.where(user_id: application.user_id)
+    ttl_paid = Payment.where(user_id: application.user_id, conf_year: application.conf_year, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
     cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
     cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
     if application.subscription
@@ -101,7 +101,7 @@ ActiveAdmin.register Application do
     total_cost = cost_lodging + cost_partner
     balance_due = total_cost + subscription - ttl_paid
     panel "Payment Activity -- [Balance Due: #{number_to_currency(balance_due)} Total Cost: #{number_to_currency(total_cost)}]" do
-      table_for application.user.payments.current_conference_payments do
+      table_for application.user.payments.where(conf_year: application.conf_year) do #application.user.payments.current_conference_payments
         column(:id) { |aid| link_to(aid.id, admin_payment_path(aid.id)) }
         column(:account_type) { |atype| atype.account_type.titleize }
         column(:transaction_type) 
