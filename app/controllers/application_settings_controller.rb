@@ -95,6 +95,12 @@ class ApplicationSettingsController < ApplicationController
     redirect_to admin_application_path(@application)
   end
 
+  def duplicate_conference_settings
+    appsetnew = ApplicationSetting.last.dup.tap { |newappset| newappset.contest_year = newappset.contest_year+1; newappset.active_application = false; newappset.lottery_result = nil; newappset.lottery_run_date = nil }
+    appsetnew.save!
+    redirect_to admin_application_settings_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_application_setting

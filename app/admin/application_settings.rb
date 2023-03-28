@@ -7,15 +7,14 @@ ActiveAdmin.register ApplicationSetting do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :opendate, :application_buffer, :contest_year, :time_zone, :allow_payments, :active_application, :allow_lottery_winner_emails, :allow_lottery_loser_emails, :registration_fee, :lottery_buffer, :application_open_directions, :application_closed_directions, :application_open_period, :registration_acceptance_directions, :special_scholarship_acceptance_directions, :payments_directions, :lottery_won_email, :lottery_lost_email, :subscription_cost, :subscription_directions
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:opendate, :application_buffer, :contest_year, :time_zone, :allow_payments, :active_application, :allow_lottery_winner_emails, :allow_lottery_loser_emails, :registration_fee, :lottery_buffer, :application_open_directions, :application_closed_directions, :application_open_period]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  permit_params :opendate, :application_buffer, :contest_year, :time_zone, :allow_payments, :active_application, :allow_lottery_winner_emails, :allow_lottery_loser_emails, :registration_fee, :lottery_buffer, :application_open_directions, :application_closed_directions, :application_open_period, :registration_acceptance_directions, :special_scholarship_acceptance_directions, :payments_directions, :application_confirm_email_message, :balance_due_email_message, :lottery_won_email, :lottery_lost_email, :subscription_cost, :subscription_directions
+
+  # remove all existing action items
+  actions :all, :except => [:new]
+
+  action_item :duplicate_conference, only: :index do
+    text_node link_to("Duplicate Conference Setting", duplicate_conference_path, data: { confirm: 'This will create a new conference and duplicate the most current settings?'}, method: :post )
+  end
 
   index do
     selectable_column
@@ -55,11 +54,17 @@ ActiveAdmin.register ApplicationSetting do
     column "subscription_directions" do |subs_text|
       subs_text.subscription_directions[0..50] + "..." unless subs_text.subscription_directions.nil?
     end
+    column "application_confirm_email_message " do |appconf_text|
+      appconf_text.application_confirm_email_message [0..50] + "..." unless appconf_text.application_confirm_email_message .nil?
+    end
     column "lottery_won_email" do |won_email|
       won_email.lottery_won_email[0..50] + "..." unless won_email.lottery_won_email.nil?
     end
     column "lottery_lost_email" do |lost_email|
       lost_email.lottery_lost_email[0..50] + "..." unless lost_email.lottery_lost_email.nil?
+    end
+    column "balance_due_directions" do |bal_text|
+      bal_text.balance_due_email_message[0..50] + "..." unless bal_text.balance_due_email_message.nil?
     end
     column :allow_payments
     column :allow_lottery_winner_emails
@@ -92,8 +97,10 @@ ActiveAdmin.register ApplicationSetting do
       row :special_scholarship_acceptance_directions
       row :payments_directions
       row :subscription_directions
+      row :application_confirm_email_message
       row :lottery_won_email
       row :lottery_lost_email
+      row :balance_due_email_message
       row :created_at
       row :updated_at
     end
@@ -119,8 +126,10 @@ ActiveAdmin.register ApplicationSetting do
       f.input :payments_directions
       f.input :subscription_directions
 
+      f.input :application_confirm_email_message
       f.input :lottery_won_email
       f.input :lottery_lost_email
+      f.input :balance_due_email_message
 
       f.input :allow_payments
       f.input :allow_lottery_winner_emails

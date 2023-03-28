@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
   post 'run_lotto', to: 'application_settings#run_lottery'
 
+  post 'duplicate_conference', to: 'application_settings#duplicate_conference_settings'
+
   post '/send_offer/:id', to: 'application_settings#send_offer', as: 'send_offer'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
