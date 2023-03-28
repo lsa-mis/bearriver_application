@@ -27,6 +27,8 @@
 #  subscription_cost                         :integer          default(0), not null
 #  subscription_directions                   :text
 #  special_scholarship_acceptance_directions :text
+#  application_confirm_email_message         :text
+#  balance_due_email_message                 :text
 #
 class ApplicationSetting < ApplicationRecord
 

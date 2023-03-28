@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_22_132609) do
+ActiveRecord::Schema.define(version: 2023_03_28_222823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2023_03_22_132609) do
     t.integer "subscription_cost", default: 0, null: false
     t.text "subscription_directions"
     t.text "special_scholarship_acceptance_directions"
+    t.text "application_confirm_email_message"
+    t.text "balance_due_email_message"
   end
 
   create_table "applications", force: :cascade do |t|
