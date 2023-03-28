@@ -3,7 +3,7 @@ ActiveAdmin.register Payment do
   action_item :delete_manual_payment, only: :show do
     link_to('Delete Manual Payment', delete_manual_payment_path(payment), method: :post, data: { confirm: 'Are you sure?' }) if payment.transaction_type == "ManuallyEntered"
   end
-  menu parent: "User Mangement", priority: 4
+  menu parent: "User Mangement", priority: 2
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
