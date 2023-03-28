@@ -101,6 +101,8 @@ class Application < ApplicationRecord
 
   scope :application_offered, -> { active_conference_applications.where("offer_status = ?", "registration_offered") }
 
+  scope :subscription_selected, -> { active_conference_applications.where("subscription = ?", true) }
+
   private
 
   def set_contest_year
