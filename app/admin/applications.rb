@@ -1,5 +1,5 @@
 ActiveAdmin.register Application do
-  menu parent: "User Mangement", priority: 2
+  menu parent: "User Mangement", priority: 1
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -18,31 +18,24 @@ ActiveAdmin.register Application do
   scope :active_conference_applications, :default => true, label: "Current years Applications"
   scope :all
 
+  scope :subscription_selected, group: :subscription
+
   action_item :send_offer, only: :show do
     button_to "Send Offer", send_offer_path(application) if application.offer_status == "not_offered"
   end
 
   filter :user_id, label: "User", as: :select, collection: -> { Application.all.map { |app| [app.display_name, app.user_id]}.uniq.sort}
   filter :offer_status, as: :select
-  filter :gender, as: :select, collection: -> { Gender.all.map { |gapp| [gapp.name, gapp.name]}.sort}
   filter :workshop_selection1, label: "workshop_selection1", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :workshop_selection2, label: "workshop_selection2", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :workshop_selection3, label: "workshop_selection3", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :lodging_selection, as: :select, collection: -> { Lodging.all.map { |lapp| [lapp.description, lapp.description]}.sort }
   filter :partner_registration_selection, as: :select, collection: -> { PartnerRegistration.all.map { |papp| [papp.description, papp.description]}.sort }
-  filter :country, as: :select
   filter :conf_year, as: :select
-  filter :subscription
 
   index do
     selectable_column
     actions
-    column :id do |id|
-      link_to id.id, admin_application_path(id)
-    end
-    column :user
-    column :conf_year
-    column :lottery_position
     column :offer_status
     column "Balance Due" do |application|
       users_current_payments = Payment.where(user_id: application.user_id, conf_year: application.conf_year)
@@ -54,37 +47,18 @@ ActiveAdmin.register Application do
       else
         subscription = 0
       end
-      total_cost = cost_lodging + cost_partner
+      total_cost = cost_lodging + cost_partner + subscription
       balance_due = total_cost + subscription - ttl_paid
       number_to_currency(balance_due)
     end
-    column :subscription
     column :first_name
     column :last_name
-    column :gender
     column :workshop_selection1
     column :workshop_selection2
     column :workshop_selection3
     column :lodging_selection
     column :partner_registration_selection
     column :birth_year
-    column :street
-    column :street2
-    column :city
-    column :state
-    column :zip
-    column :country
-    column :phone
-    column :email
-    column :email_confirmation
-    column :partner_first_name
-    column :partner_last_name
-    column :how_did_you_hear
-    column :accessibility_requirements
-    column :special_lodging_request
-    column :food_restrictions
-    column :result_email_sent
-    column :offer_status_date
   end
 
   show do
@@ -94,12 +68,12 @@ ActiveAdmin.register Application do
     cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
     cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
     if application.subscription
-      subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
+      subscription = ApplicationSetting.find_by(contest_year: application.conf_year).subscription_cost.to_f # ApplicationSetting.get_current_app_settings.subscription_cost.to_f
     else
       subscription = 0
     end
-    total_cost = cost_lodging + cost_partner
-    balance_due = total_cost + subscription - ttl_paid
+    total_cost = cost_lodging + cost_partner + subscription
+    balance_due = total_cost - ttl_paid
     panel "Payment Activity -- [Balance Due: #{number_to_currency(balance_due)} Total Cost: #{number_to_currency(total_cost)}]" do
       table_for application.user.payments.where(conf_year: application.conf_year) do #application.user.payments.current_conference_payments
         column(:id) { |aid| link_to(aid.id, admin_payment_path(aid.id)) }
