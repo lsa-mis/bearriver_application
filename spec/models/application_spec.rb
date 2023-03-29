@@ -36,6 +36,7 @@
 #  result_email_sent              :boolean          default(FALSE), not null
 #  offer_status_date              :datetime
 #  subscription                   :boolean          default(FALSE)
+#  partner_registration_id        :bigint           not null
 #
 require 'rails_helper'
 

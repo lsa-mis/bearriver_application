@@ -16,7 +16,7 @@ class ApplicationsController < ApplicationController
   # GET /applications/1.json
   def show
     cost_lodging = Lodging.find_by(description: @application.lodging_selection).cost.to_f
-    cost_partner = PartnerRegistration.find_by(description: @application.partner_registration_selection).cost.to_f
+    cost_partner = @application.partner_registration.cost.to_f
     @total_cost = cost_lodging + cost_partner
   end
 
@@ -93,7 +93,7 @@ class ApplicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def application_params
-      params.require(:application).permit(:first_name, :last_name, :gender, :birth_year, :street, :street2, :city, :state, :zip, :country, :phone, :email, :email_confirmation, :workshop_selection1, :workshop_selection2, :workshop_selection3, :lodging_selection, :partner_registration_selection, :partner_first_name, :partner_last_name, :how_did_you_hear, :accessibility_requirements, :special_lodging_request, :food_restrictions, :user_id, :subscription)
+      params.require(:application).permit(:first_name, :last_name, :gender, :birth_year, :street, :street2, :city, :state, :zip, :country, :phone, :email, :email_confirmation, :workshop_selection1, :workshop_selection2, :workshop_selection3, :lodging_selection, :partner_registration_selection, :partner_registration_id, :partner_first_name, :partner_last_name, :how_did_you_hear, :accessibility_requirements, :special_lodging_request, :food_restrictions, :user_id, :subscription)
     end
 
 end

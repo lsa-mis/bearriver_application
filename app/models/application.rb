@@ -36,9 +36,14 @@
 #  result_email_sent              :boolean          default(FALSE), not null
 #  offer_status_date              :datetime
 #  subscription                   :boolean          default(FALSE)
+#  partner_registration_id        :bigint           not null
 #
 class Application < ApplicationRecord
   before_create :set_contest_year
+
+  belongs_to :partner_registration, optional: true
+
+  validates :user_id, presence: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -55,7 +60,6 @@ class Application < ApplicationRecord
   validates :workshop_selection2, presence: true
   validates :workshop_selection3, presence: true
   validates :lodging_selection, presence: true
-  validates :partner_registration_selection, presence: true
 
   HOW_DID_YOU_HEAR = ["---", "Word of Mouth", "Magazine Advertisement", "Online Advertisement", "Newspaper Advertisement", "Other"]
 
@@ -90,7 +94,7 @@ class Application < ApplicationRecord
   end
 
   def partner_registration_description
-    PartnerRegistration.find(partner_registration_selection).description
+    PartnerRegistration.find(partner_registration_id).display_name
   end
 
   scope :active_conference_applications, -> { where("conf_year = ?", ApplicationSetting.get_current_app_settings.contest_year) }

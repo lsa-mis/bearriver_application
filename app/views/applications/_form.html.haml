@@ -131,7 +131,7 @@
   .h6
     = f.label 'Please indicate whether your registration includes a spouse/partner:', class: 'required'
   .form-group
-    = f.collection_radio_buttons(:partner_registration_selection, get_partner_registrations , :description, :description) do |b|
+    = f.collection_radio_buttons(:partner_registration_id, get_partner_registrations, :id, :display_name ) do |b|
       .form-check
       = b.radio_button(class: "form-check-input ml-3")
       = b.label(class: "form-check-label  ml-5")
@@ -188,33 +188,33 @@
       $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
     });
 
-    $('#application_partner_registration_selection_i_am_attending_the_conference_alone_').on('change', function() {
+    $('#application_partner_registration_id_3').on('change', function() {
       if($(this).prop("checked") == true) {
         $( '#application_partner_first_name').attr("required", false);
         $( '#application_partner_last_name').attr("required", false);
       }
     });
 
-    if($('#application_partner_registration_selection_i_am_attending_the_conference_alone_').prop('checked') == true) {
+    if($('#application_partner_registration_id_3').prop('checked') == true) {
       $( '#application_partner_first_name').attr("required", false);
       $( '#application_partner_last_name').attr("required", false);
     };
 
-    $('#application_partner_registration_selection_my_spousepartner_will_be_registering_separately_for_the_conference_and_workshops_').on('change', function() {
+    $('#application_partner_registration_id_4').on('change', function() {
       if($(this).prop("checked") == true) {
         $( '#application_partner_first_name').attr("required", true);
         $( '#application_partner_last_name').attr("required", true);
       }
     });
 
-    $('#application_partner_registration_selection_my_spousepartner_will_not_be_attending_the_workshops_but_will_attend_the_conference').on('change', function() {
+    $('#application_partner_registration_id_2').on('change', function() {
       if($(this).prop("checked") == true) {
         $( '#application_partner_first_name').attr("required", true);
         $( '#application_partner_last_name').attr("required", true);
       }
     });
 
-    $('#application_partner_registration_selection_my_spousepartner_will_not_be_attending_the_workshops_but_will_attend_the_conference_and_readings').on('change', function() {
+    $('#application_partner_registration_id_6').on('change', function() {
       if($(this).prop("checked") == true) {
         $( '#application_partner_first_name').attr("required", true);
         $( '#application_partner_last_name').attr("required", true);

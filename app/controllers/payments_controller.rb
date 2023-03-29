@@ -47,14 +47,9 @@
       @users_current_payments = Payment.current_conference_payments.where(user_id: current_user )
       @ttl_paid = Payment.current_conference_payments.where(user_id: current_user, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
       cost_lodging = Lodging.find_by(description: @current_application.lodging_selection).cost.to_f
-      cost_partner = PartnerRegistration.find_by(description: @current_application.partner_registration_selection).cost.to_f
-      if @current_application.subscription
-        @cost_subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
-      else
-        @cost_subscription = 0
-      end
+      cost_partner = @current_application.partner_registration.cost.to_f
       @total_cost = cost_lodging + cost_partner
-      @balance_due = @total_cost + @cost_subscription - @ttl_paid
+      @balance_due = @total_cost - @ttl_paid
     end
 
     def delete_manual_payment

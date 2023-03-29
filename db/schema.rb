@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_28_222823) do
+ActiveRecord::Schema.define(version: 2023_03_29_201545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,8 @@ ActiveRecord::Schema.define(version: 2023_03_28_222823) do
     t.boolean "result_email_sent", default: false, null: false
     t.datetime "offer_status_date"
     t.boolean "subscription", default: false
+    t.bigint "partner_registration_id", null: false
+    t.index ["partner_registration_id"], name: "index_applications_on_partner_registration_id"
     t.index ["user_id"], name: "index_applications_on_user_id"
   end
 
@@ -158,6 +160,7 @@ ActiveRecord::Schema.define(version: 2023_03_28_222823) do
     t.decimal "cost"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -207,6 +210,7 @@ ActiveRecord::Schema.define(version: 2023_03_28_222823) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "applications", "partner_registrations"
   add_foreign_key "applications", "users"
   add_foreign_key "payments", "users"
 end

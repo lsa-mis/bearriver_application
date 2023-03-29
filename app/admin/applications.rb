@@ -5,15 +5,8 @@ ActiveAdmin.register Application do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :first_name, :last_name, :gender, :birth_year, :street, :street2, :city, :state, :zip, :country, :phone, :email, :email_confirmation, :workshop_selection1, :workshop_selection2, :workshop_selection3, :lodging_selection, :partner_registration_selection, :partner_first_name, :partner_last_name, :how_did_you_hear, :accessibility_requirements, :special_lodging_request, :food_restrictions, :user_id, :lottery_position, :offer_status, :result_email_sent, :offer_status_date, :conf_year, :subscription
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:first_name, :last_name, :gender, :birth_year, :street, :street2, :city, :state, :zip, :country, :phone, :email, :email_confirmation, :workshop_selection1, :workshop_selection2, :workshop_selection3, :lodging_selection, :partner_registration_selection, :partner_first_name, :partner_last_name, :how_did_you_hear, :accessibility_requirements, :special_lodging_request, :food_restrictions, :user_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  permit_params :first_name, :last_name, :gender, :birth_year, :street, :street2, :city, :state, :zip, :country, :phone, :email, :email_confirmation, :workshop_selection1, :workshop_selection2, :workshop_selection3, :lodging_selection, :partner_registration_selection, :partner_registration_id, :partner_first_name, :partner_last_name, :how_did_you_hear, :accessibility_requirements, :special_lodging_request, :food_restrictions, :user_id, :lottery_position, :offer_status, :result_email_sent, :offer_status_date, :conf_year, :subscription
+
 
   scope :active_conference_applications, :default => true, label: "Current years Applications"
   scope :all
@@ -30,7 +23,7 @@ ActiveAdmin.register Application do
   filter :workshop_selection2, label: "workshop_selection2", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :workshop_selection3, label: "workshop_selection3", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :lodging_selection, as: :select, collection: -> { Lodging.all.map { |lapp| [lapp.description, lapp.description]}.sort }
-  filter :partner_registration_selection, as: :select, collection: -> { PartnerRegistration.all.map { |papp| [papp.description, papp.description]}.sort }
+  filter :partner_registration_id, as: :select, collection: -> { PartnerRegistration.all.map { |papp| [papp.description, papp.id]}.sort }
   filter :conf_year, as: :select
 
   index do
@@ -41,14 +34,9 @@ ActiveAdmin.register Application do
       users_current_payments = Payment.where(user_id: application.user_id, conf_year: application.conf_year)
       ttl_paid = Payment.where(user_id: application.user_id, conf_year: application.conf_year, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
       cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
-      cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
-      if application.subscription
-        subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
-      else
-        subscription = 0
-      end
-      total_cost = cost_lodging + cost_partner + subscription
-      balance_due = total_cost + subscription - ttl_paid
+      cost_partner = application.partner_registration.cost.to_f
+      total_cost = cost_lodging + cost_partner
+      balance_due = total_cost - ttl_paid
       number_to_currency(balance_due)
     end
     column :first_name
@@ -57,7 +45,9 @@ ActiveAdmin.register Application do
     column :workshop_selection2
     column :workshop_selection3
     column :lodging_selection
-    column :partner_registration_selection
+    column "partner_registration_id" do |application|
+      application.partner_registration.display_name
+    end
     column :birth_year
   end
 
@@ -66,13 +56,8 @@ ActiveAdmin.register Application do
     users_current_payments = Payment.where(user_id: application.user_id, conf_year: application.conf_year) # Payment.current_conference_payments.where(user_id: application.user_id)
     ttl_paid = Payment.where(user_id: application.user_id, conf_year: application.conf_year, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
     cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
-    cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
-    if application.subscription
-      subscription = ApplicationSetting.find_by(contest_year: application.conf_year).subscription_cost.to_f # ApplicationSetting.get_current_app_settings.subscription_cost.to_f
-    else
-      subscription = 0
-    end
-    total_cost = cost_lodging + cost_partner + subscription
+    cost_partner = application.partner_registration.cost.to_f
+    total_cost = cost_lodging + cost_partner
     balance_due = total_cost - ttl_paid
     panel "Payment Activity -- [Balance Due: #{number_to_currency(balance_due)} Total Cost: #{number_to_currency(total_cost)}]" do
       table_for application.user.payments.where(conf_year: application.conf_year) do #application.user.payments.current_conference_payments
@@ -111,7 +96,9 @@ ActiveAdmin.register Application do
       row :workshop_selection2
       row :workshop_selection3
       row :lodging_selection
-      row :partner_registration_selection
+      row "partner_registration_id" do |app|
+        app.partner_registration.display_name
+      end
       row :partner_first_name
       row :partner_last_name
       row :how_did_you_hear
@@ -150,7 +137,7 @@ ActiveAdmin.register Application do
       f.input :workshop_selection2, :label => "Workshop Second Choice", :as => :select, :collection => Workshop.all.map { |w| ["#{w.instructor}", w.instructor] }
       f.input :workshop_selection3, :label => "Workshop Third Choice", :as => :select, :collection => Workshop.all.map { |w| ["#{w.instructor}", w.instructor] }
       f.input :lodging_selection, :label => "Lodging selection", :as => :select, :collection => Lodging.all.map { |l| ["Plan:#{l.plan} #{l.description} #{number_to_currency(l.cost.to_f)}", l.description] }
-      f.input :partner_registration_selection, :label => "Partner Registration Selection", :as => :select, :collection => PartnerRegistration.all.map { |p| ["#{p.description} #{number_to_currency(p.cost.to_f)}", p.description] }
+      f.input :partner_registration_id, :label => "Partner Registration Selection", :as => :select, :collection => PartnerRegistration.all.map { |p| ["#{p.display_name}", p.id] }
       f.input :partner_first_name
       f.input :partner_last_name
       f.input :how_did_you_hear
@@ -173,14 +160,9 @@ ActiveAdmin.register Application do
       users_current_payments = Payment.current_conference_payments.where(user_id: application.user_id)
       ttl_paid = Payment.current_conference_payments.where(user_id: application.user_id, transaction_status: '1').pluck(:total_amount).map(&:to_f).sum / 100
       cost_lodging = Lodging.find_by(description: application.lodging_selection).cost.to_f
-      cost_partner = PartnerRegistration.find_by(description: application.partner_registration_selection).cost.to_f
-      if application.subscription
-        subscription = ApplicationSetting.get_current_app_settings.subscription_cost.to_f
-      else
-        subscription = 0
-      end
+      cost_partner = application.partner_registration.cost.to_f
       total_cost = cost_lodging + cost_partner
-      balance_due = total_cost + subscription - ttl_paid
+      balance_due = total_cost - ttl_paid
       number_to_currency(balance_due)
     end
     column :subscription
@@ -191,7 +173,9 @@ ActiveAdmin.register Application do
     column :workshop_selection2
     column :workshop_selection3
     column :lodging_selection
-    column :partner_registration_selection
+    column "partner_registration_id" do |app|
+      app.partner_registration.display_name
+    end
     column :birth_year
     column :street
     column :street2
