@@ -35,11 +35,11 @@ class User < ApplicationRecord
     applications.active_conference_applications.last
   end
 
-  def total_cost
-    cost_lodging = Lodging.find(self.application.lodging_selection).cost.to_f
-    cost_partner = PartnerRegistration.find(self.application.partner_registration_selection).cost.to_f
-    cost_lodging + cost_partner 
-  end
+  # def total_cost
+  #   cost_lodging = Lodging.find(self.application.lodging_selection).cost.to_f
+  #   cost_partner = PartnerRegistration.find(self.application.partner_registration).cost.to_f
+  #   cost_lodging + cost_partner 
+  # end
 
   def display_name
     self.email # or whatever column you want
