@@ -26,7 +26,7 @@ ActiveAdmin.register Payment do
 
   filter :user_id, as: :select,
     # collection: -> { User.all.order(:email) },
-    collection: -> { Application.all.map { |app| [app.display_name, app.user_id] } },
+    collection: -> { Application.all.order(:last_name).map { |app| [app.display_name, app.user_id] } },
     label: "Name"
   filter :conf_year, as: :select
 
