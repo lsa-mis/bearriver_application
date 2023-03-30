@@ -1,8 +1,6 @@
 - provide(:title, 'Conference Information')
 
-%p
-  Dear Writers:
-  %br
+%div.container.pt-4
   - if current_application_settings.opendate > Time.now
     = "Application for the #{current_application_settings.contest_year} conference will be open:"
     %p.m-3
@@ -27,16 +25,14 @@
         - if current_application_settings.application_closed_directions.present?
           = raw(current_application_settings.application_closed_directions)
     - elsif user_signed_in? && user_has_special_payment?(current_user)
-      %p Use the button below to apply to the conference 
-      = link_to 'Application', new_application_path, class: 'btn btn-sm btn-success'
+      = raw(current_application_settings.special_scholarship_acceptance_directions)
+      = link_to 'Create an Application', new_application_path, class: 'btn btn-sm btn-success'
     - else
       - if current_application_settings.application_closed_directions.present?
         = raw(current_application_settings.application_closed_directions)
 
-  %br
-  Thank you.
-  %p
-  The Bear River Staff
+  %div.mt-4
+    The Bear River Staff,
   %p
     Feel free to reach out with any questions to
     %br
