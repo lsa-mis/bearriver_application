@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   helper_method :get_lodgings
 
   def get_partner_registrations
-    @partner_registrations = PartnerRegistration.all.order(cost: :asc)
+    @partner_registrations = PartnerRegistration.active.order(cost: :asc)
   end
 
   helper_method :get_partner_registrations

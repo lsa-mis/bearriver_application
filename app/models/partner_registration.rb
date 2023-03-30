@@ -7,7 +7,7 @@
 #  cost        :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  active      :boolean
+#  active      :boolean          default(TRUE)
 #
 class PartnerRegistration < ApplicationRecord
 
@@ -15,6 +15,8 @@ class PartnerRegistration < ApplicationRecord
 
   validates :description, presence: true
   validates :cost, presence: true
+
+  scope :active, -> { where(active: true) }
 
   def display_name
     "#{ self.description} ( $#{self.cost.to_i} additional fee )"

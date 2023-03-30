@@ -7,7 +7,7 @@ ActiveAdmin.register PartnerRegistration do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :description, :cost
+  permit_params :description, :cost, :active
   #
   # or
   #
@@ -26,6 +26,7 @@ ActiveAdmin.register PartnerRegistration do
     column "cost" do |fee|
       number_to_currency(fee.cost)
     end
+    column :active
   end
 
   show do
@@ -34,6 +35,7 @@ ActiveAdmin.register PartnerRegistration do
       row "cost" do |fee|
         number_to_currency(fee.cost)
       end
+      row :active
       row :created_at
       row :updated_at
     end

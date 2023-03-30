@@ -7,7 +7,7 @@
 #  cost        :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  active      :boolean
+#  active      :boolean          default(TRUE)
 #
 require 'rails_helper'
 
