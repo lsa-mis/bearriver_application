@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   helper_method :user_has_application?
 
   def user_has_special_payment?(user)
-    if Payment.current_conference_payments.where(user_id: user).where(account_type: ["scholarship", "Scholarship", "special", "Special"]).any?
+    if Payment.current_conference_payments.where(user_id: user).where(account_type: ["scholarship", "special"]).any?
       true
     else
       false
