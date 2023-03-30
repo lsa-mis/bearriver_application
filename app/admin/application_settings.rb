@@ -55,7 +55,7 @@ ActiveAdmin.register ApplicationSetting do
       subs_text.subscription_directions[0..50] + "..." unless subs_text.subscription_directions.nil?
     end
     column "application_confirm_email_message " do |appconf_text|
-      appconf_text.application_confirm_email_message [0..50] + "..." unless appconf_text.application_confirm_email_message .nil?
+      appconf_text.application_confirm_email_message[0..50] + "..." unless appconf_text.application_confirm_email_message.nil?
     end
     column "lottery_won_email" do |won_email|
       won_email.lottery_won_email[0..50] + "..." unless won_email.lottery_won_email.nil?
