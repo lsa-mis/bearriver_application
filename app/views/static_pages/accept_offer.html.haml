@@ -6,9 +6,12 @@
   = "#{current_application_settings.contest_year} Bear River Conference!"
 %p
   = link_to "Login", new_user_session_path, :class => 'btn btn-sm btn-success'
-%h4
-  = raw(current_application_settings.registration_acceptance_directions)
+
+= raw(current_application_settings.registration_acceptance_directions)
+
+%div.mt-4
+  The Bear River Staff,
+%p
+  Feel free to reach out with any questions to
   %br
-  Thank you.
-  %br
-  The Bear River Staff
+  = mail_to "bearriver-questions@umich.edu"
