@@ -23,10 +23,13 @@ ActiveAdmin.register Payment do
   # filter :user, as: :select, collection: -> { User.all.order(:email) }
   # filter user.current_application, label: "Last Name (Starts with)"
   # filter :application_first_name_start, label: "First Name (Starts with)"
-  # filter :conf_year, as: :select
-  filter :user, 
-    collection: -> { Application.active_conference_applications.order(:last_name) },
+
+  filter :user_id, as: :select,
+    # collection: -> { User.all.order(:email) },
+    collection: -> { Application.all.map { |app| [app.display_name, app.user_id] } },
     label: "Name"
+  filter :conf_year, as: :select
+
 
   index do
     selectable_column
