@@ -15,9 +15,7 @@
   %p 
     - if current_application_settings.subscription_cost > 0 && current_application_settings.allow_payments
       = link_to "Subscribe to Michigan Quarterly Review", subscription_path, class: "btn btn-info"
-  %p 
-    You may email any questions to
-    = mail_to "bearriver-questions@umich.edu"
+
   %hr.w-75
 
   .border-success.mb-2.card{:style => "width: 18rem;"}
@@ -70,11 +68,13 @@
     You will receive an email confirmation from
     'MerchantCreditCard&#64;umich.edu' for each transaction.
 
-  %h6
-    You may email any questions to
-    = mail_to "bearriver-questions@umich.edu"
-
 - else
   %p 
     You have not made any payments. If this is incorrect please contact
-    = mail_to "bearriver-questions@umich.edu"
+
+%div.mt-4
+  The Bear River Staff,
+%p
+  Feel free to reach out with any questions to
+  %br
+  = mail_to "bearriver-questions@umich.edu"
