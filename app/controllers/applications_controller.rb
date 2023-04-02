@@ -22,6 +22,7 @@ class ApplicationsController < ApplicationController
 
   # GET /applications/new
   def new
+    redirect_to root_path if current_user.current_conf_application.present?
     @application = Application.new
   end
 
@@ -38,7 +39,7 @@ class ApplicationsController < ApplicationController
     @application.user = current_user
     respond_to do |format|
       if @application.save
-        if (["special", "scholarship", "Special", "Scholarship"] & current_user.payments.current_conference_payments.pluck(:account_type)).any?
+        if (["special", "scholarship"] & current_user.payments.current_conference_payments.pluck(:account_type)).any?
             @application.update(offer_status: 'registration_accepted')
         end
         AppConfirmationMailer.with(app: current_user.current_conf_application).application_submitted.deliver_now
