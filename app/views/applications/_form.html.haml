@@ -174,23 +174,24 @@
 :javascript
   $( document ).ready(function() {
     // workshop selection prevent selecting same item twice
+
     $('#application_workshop_selection1').on('change', function() {
-      $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
-      $( "option" ).remove( "#application_workshop_selection3 > :contains(" + this.value + ")" );
+      $('#application_workshop_selection2 option[value="' + this.value + '"]').hide();
+      $('#application_workshop_selection3 option[value="' + this.value + '"]').hide();
     });
 
     $('#application_workshop_selection2').on('change', function() {
-      $( "option" ).remove( "#application_workshop_selection1 > :contains(" + this.value + ")" );
-      $( "option" ).remove( "#application_workshop_selection3 > :contains(" + this.value + ")" );
+      $('#application_workshop_selection1 option[value="' + this.value + '"]').hide();
+      $('#application_workshop_selection3 option[value="' + this.value + '"]').hide();
     });
 
     $('#application_workshop_selection3').on('change', function() {
-      $( "option" ).remove( "#application_workshop_selection1 > :contains(" + this.value + ")" );
-      $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
+      $('#application_workshop_selection1 option[value="' + this.value + '"]').hide();
+      $('#application_workshop_selection2 option[value="' + this.value + '"]').hide();
     });
-
-    // if partner is not attending, then make partner name fields not required
     
+    // if partner is not attending, then make partner name fields not required
+
     // get input with the label "I am attending the conference alone"
     var keyInput = $('label:contains("I am attending the conference alone")').prev('input');
 
