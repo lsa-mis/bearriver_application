@@ -123,7 +123,7 @@
   .h6
     = f.label 'Please select a room type:', class: 'required'
   .form-group
-    = f.collection_radio_buttons(:lodging_selection, get_lodgings, :description, :description) do |b|
+    = f.collection_radio_buttons(:lodging_selection, get_lodgings, :description, :display_name) do |b|
       .form-check
       = b.radio_button(class: "form-check-input ml-3")
       = b.label(class: "form-check-label  ml-5")
@@ -189,7 +189,7 @@
       $('#application_workshop_selection1 option[value="' + this.value + '"]').hide();
       $('#application_workshop_selection2 option[value="' + this.value + '"]').hide();
     });
-    
+
     // if partner is not attending, then make partner name fields not required
 
     // get input with the label "I am attending the conference alone"

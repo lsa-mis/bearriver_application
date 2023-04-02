@@ -11,6 +11,6 @@
 #
 class Lodging < ApplicationRecord
   def display_name
-    "#{self.plan} - #{self.description}"
+    "#{self.plan} - #{self.description} - ( $#{self.cost.to_i} )"
   end
 end
