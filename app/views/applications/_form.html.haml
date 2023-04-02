@@ -129,8 +129,8 @@
       = b.label(class: "form-check-label  ml-5")
 
   .h6
-    = f.label 'Please indicate whether your registration includes a spouse/partner:', class: 'required'
-  .form-group
+    = f.label 'Please indicate whether your registration includes a spouse/partner:', class: 'required'    
+  #partner-registration.form-group
     = f.collection_radio_buttons(:partner_registration_id, get_partner_registrations, :id, :display_name ) do |b|
       .form-check
       = b.radio_button(class: "form-check-input ml-3")
@@ -173,6 +173,7 @@
 
 :javascript
   $( document ).ready(function() {
+    // workshop selection prevent selecting same item twice
     $('#application_workshop_selection1').on('change', function() {
       $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
       $( "option" ).remove( "#application_workshop_selection3 > :contains(" + this.value + ")" );
@@ -188,37 +189,21 @@
       $( "option" ).remove( "#application_workshop_selection2 > :contains(" + this.value + ")" );
     });
 
-    $('#application_partner_registration_id_3').on('change', function() {
-      if($(this).prop("checked") == true) {
-        $( '#application_partner_first_name').attr("required", false);
-        $( '#application_partner_last_name').attr("required", false);
+    // if partner is not attending, then make partner name fields not required
+    
+    // get input with the label "I am attending the conference alone"
+    var keyInput = $('label:contains("I am attending the conference alone")').prev('input');
+
+    // Select all inputs with the name "application[partner_registration_id]"
+    $('input[name="application[partner_registration_id]"]').on('change', function() {
+      if ( keyInput.is(":checked") ) {
+        // remove the required attribute from the partner first name and last name fields
+        $('#application_partner_first_name').attr('required', false);
+        $('#application_partner_last_name').attr('required', false);
+      } else {
+        // add the required attribute to the partner first name and last name fields
+        $('#application_partner_first_name').attr('required', true);
+        $('#application_partner_last_name').attr('required', true);
       }
     });
-
-    if($('#application_partner_registration_id_3').prop('checked') == true) {
-      $( '#application_partner_first_name').attr("required", false);
-      $( '#application_partner_last_name').attr("required", false);
-    };
-
-    $('#application_partner_registration_id_4').on('change', function() {
-      if($(this).prop("checked") == true) {
-        $( '#application_partner_first_name').attr("required", true);
-        $( '#application_partner_last_name').attr("required", true);
-      }
-    });
-
-    $('#application_partner_registration_id_2').on('change', function() {
-      if($(this).prop("checked") == true) {
-        $( '#application_partner_first_name').attr("required", true);
-        $( '#application_partner_last_name').attr("required", true);
-      }
-    });
-
-    $('#application_partner_registration_id_6').on('change', function() {
-      if($(this).prop("checked") == true) {
-        $( '#application_partner_first_name').attr("required", true);
-        $( '#application_partner_last_name').attr("required", true);
-      }
-    });
-
   })
