@@ -24,6 +24,9 @@ ActiveAdmin.register Payment do
   # filter user.current_application, label: "Last Name (Starts with)"
   # filter :application_first_name_start, label: "First Name (Starts with)"
 
+  scope :current_conference_payments
+  scope :all
+
   filter :user_id, as: :select,
     # collection: -> { User.all.order(:email) },
     collection: -> { Application.all.order(:last_name).map { |app| [app.display_name, app.user_id] } },
