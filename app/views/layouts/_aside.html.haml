@@ -1,5 +1,5 @@
 - if user_signed_in? && user_has_application?(current_user)
-  - if ["registration_offered", "registration_accepted"].include? Application.active_conference_applications.find_by(user_id: current_user).offer_status
+  - if ["special_offer_application", "registration_offered", "registration_accepted"].include? Application.active_conference_applications.find_by(user_id: current_user).offer_status
     %aside#sidebar-layout
       .container
         %h4.text-success Your Details
