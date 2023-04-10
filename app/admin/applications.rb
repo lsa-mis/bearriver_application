@@ -19,6 +19,7 @@ ActiveAdmin.register Application do
 
   filter :user_id, label: "User", as: :select, collection: -> { Application.all.map { |app| [app.display_name, app.user_id]}.uniq.sort}
   filter :offer_status, as: :select
+  filter :result_email_sent, as: :select
   filter :workshop_selection1, label: "workshop_selection1", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :workshop_selection2, label: "workshop_selection2", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
   filter :workshop_selection3, label: "workshop_selection3", as: :select, collection: -> { Workshop.all.map { |mapp| [mapp.instructor, mapp.instructor]}.sort }
