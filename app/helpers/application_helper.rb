@@ -12,6 +12,7 @@ module ApplicationHelper
   def offer_status 
     [
       ['Registration Offered','registration_offered'],
+      ['Special Offer Application','special_offer_application'],
       ['Registration Accepted','registration_accepted'],
       ['Registration Declined','registration_declined'],
       ['Not Offered','not_offered']
