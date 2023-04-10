@@ -80,18 +80,27 @@ class ApplicationSettingsController < ApplicationController
             LotteryMailer.with(application: app).lost_lottery_email.deliver_now
           end
         end
+        send_pre_lottery_selected_emails
         redirect_to admin_root_path, notice: 'The lottery was successfully run.'
       else
         redirect_to admin_root_path, alert: 'The lottery has already been run'
       end
-    end
-    
+    end 
   end
+
+  def send_pre_lottery_selected_emails
+    pre_offers = Application.active_conference_applications.where(offer_status: "special_offer_application", result_email_sent: false)
+    pre_offers.each do |pre_offer_app|
+      pre_offer_app.update(offer_status: "registration_offered", offer_status_date: Time.now, result_email_sent: true)
+      LotteryMailer.with(application: pre_offer_app).pre_lottery_offer_email.deliver_now
+    end
+  end
+
 
   def send_offer
     @application = Application.find(params[:id])
     @application.update(offer_status: "registration_offered", offer_status_date: Time.now, result_email_sent: true)
-    LotteryMailer.with(application: @application).won_lottery_email.deliver_now
+    LotteryMailer.with(application: @application).waitlisted_offer_email.deliver_now
     redirect_to admin_application_path(@application)
   end
 

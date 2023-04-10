@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h4
+      Congratulations #{@application.first_name} #{@application.last_name}! 
+    %p 
+      = @special_offer_invite_email_body
+    %p 
+      = link_to "Accept Offer", accept_offer_url
+    %p We look forward to you joining us at Bear River!
