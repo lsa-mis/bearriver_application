@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_29_223727) do
+ActiveRecord::Schema.define(version: 2023_04_10_181609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 2023_03_29_223727) do
     t.text "special_scholarship_acceptance_directions"
     t.text "application_confirm_email_message"
     t.text "balance_due_email_message"
+    t.text "special_offer_invite_email"
   end
 
   create_table "applications", force: :cascade do |t|

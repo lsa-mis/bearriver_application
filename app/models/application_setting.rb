@@ -29,6 +29,7 @@
 #  special_scholarship_acceptance_directions :text
 #  application_confirm_email_message         :text
 #  balance_due_email_message                 :text
+#  special_offer_invite_email                :text
 #
 class ApplicationSetting < ApplicationRecord
 
