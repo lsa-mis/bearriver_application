@@ -103,7 +103,8 @@ class Application < ApplicationRecord
 
   scope :application_accepted, -> { active_conference_applications.where("offer_status = ?", "registration_accepted") }
 
-  scope :application_offered, -> { active_conference_applications.where("offer_status = ?", "registration_offered") }
+  scope :application_offered, -> { active_conference_applications.where("offer_status = ? or offer_status = ?", "registration_offered", "special_offer_application") }
+
 
   scope :subscription_selected, -> { active_conference_applications.where("subscription = ?", true) }
 
