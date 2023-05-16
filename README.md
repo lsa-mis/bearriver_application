@@ -7,7 +7,7 @@ Allows individuals to register for the Bear River Writers conference held at the
 3. run ```foreman start```
 
 ## Prerequisites
-- ruby '2.7.1'
+- ruby '3.0.2'
 - rails '~> 6.0.3'
 - postgreql '>= 0.18', '< 2.0'
 
