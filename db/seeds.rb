@@ -141,17 +141,13 @@ Gender.create!([
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 # create 132 users user the faker gem
-132.times do
-  User.create!(email: Faker::Internet.email, password: 'password', password_confirmation: 'password')
-end
-
-# create 100 applications using the faker gem and associate them with a user
 gender_type = ["Male", "Female"]
 workshop_type = ["Jerry Dennis", "A. Van Jordan", "Thomas Lynch", "Richard Tillinghast", "Catherine Wing", "Desiree Cooper", "V.V. (Sugi) Ganeshananthan", "Mardi Link", "Diane Seuss", "Douglas Trevor"]
 lodging_type = ["No Lodging", "Bunk Room", "Semi-Private Room and Shared Bath", "Private Room and Private Bath"]
 how_did_you_hear_type = ["Word of Mouth", "Magazine Advertisement", "Online Advertisement", "Newspaper Advertisement", "Other"]
 
-200.times do
+132.times do
+  user = User.create!(email: Faker::Internet.email, password: 'password', password_confirmation: 'password')
   Application.create!( 
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -163,9 +159,9 @@ how_did_you_hear_type = ["Word of Mouth", "Magazine Advertisement", "Online Adve
     state: Faker::Address.state,
     zip: Faker::Address.zip,
     country: Faker::Address.country,
-    phone: Faker::Address.phone,
-    email: Faker::Internet.email,
-    email_confirmation: email,
+    phone: Faker::PhoneNumber.cell_phone,
+    email: user.email,
+    email_confirmation: user.email,
     workshop_selection1: workshop_type.sample,
     workshop_selection2: workshop_type.sample,
     workshop_selection3: workshop_type.sample,
@@ -176,7 +172,7 @@ how_did_you_hear_type = ["Word of Mouth", "Magazine Advertisement", "Online Adve
     accessibility_requirements: Faker::Lorem.sentence,
     special_lodging_request: Faker::Lorem.sentence,
     food_restrictions: Faker::Lorem.sentence,
-    user_id: User.all.pluck(:id).sample,
+    user_id: user.id,
     conf_year: Time.now.year,
     partner_registration_id: Faker::Number.within(range: 1..4)
   )
