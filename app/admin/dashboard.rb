@@ -38,12 +38,19 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
     columns do
+      if current_application_settings.allow_payments?
+        div do
+          span do
+            button_to 'Send Balance Due email', send_balance_due_url, class: 'btn'
+          end
+        end
+      end
       column do
         panel "#{ApplicationSetting.get_current_app_year} Applicants who accepted their offer (#{Application.application_accepted.count})" do
           table_for Application.application_accepted.sort.reverse do
-            column("Name") {|a| a.display_name }
-            column("User") { |u| link_to(u.user.email, admin_application_path(u.id)) }
+            column("Applicant") { |u| link_to(u.display_name, admin_application_path(u.id)) }
             column("Offer Date") { |od| od.offer_status_date }
+            column("Balance Due") { |a| number_to_currency a.balance_due }  
           end
         end
       end
