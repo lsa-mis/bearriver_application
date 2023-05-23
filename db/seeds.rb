@@ -177,3 +177,26 @@ how_did_you_hear_type = ["Word of Mouth", "Magazine Advertisement", "Online Adve
     partner_registration_id: Faker::Number.within(range: 1..4)
   )
 end
+
+# create 7 payments using random user ids
+7.times do
+  date_to_use = Faker::Time.between(from: DateTime.now - 3, to: DateTime.now)
+  user = User.find(Faker::Number.within(range: 1..132))
+  Payment.create!(
+    transaction_type: "ManuallyEntered",
+    transaction_status: "1",
+    transaction_id: "#{date_to_use}_admin@example.com",
+    total_amount: "0.0",
+    transaction_date: date_to_use,
+    account_type: "scholarship",
+    result_code: "Manually Entered",
+    result_message: "This was manually entered by admin@example.com",
+    user_account: nil,
+    payer_identity: nil,
+    timestamp: date_to_use.utc.to_i,
+    transaction_hash: nil,
+    user_id: user.id,
+    conf_year: Time.now.year
+  )
+  Application.find_by(user_id: user.id).update!(offer_status: "registration_accepted", offer_status_date: date_to_use)
+end
