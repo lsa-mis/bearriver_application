@@ -39,6 +39,9 @@ Rails.application.routes.draw do
   post '/send_offer/:id', to: 'application_settings#send_offer', as: 'send_offer'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  # Send email to applicants who a balance due
+  post '/send_balance_due', to: 'applications#send_balance_due', as: 'send_balance_due'
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
