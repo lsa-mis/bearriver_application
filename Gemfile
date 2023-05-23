@@ -36,6 +36,7 @@ group :development do
   gem "binding_of_caller"
   gem 'capistrano',         require: false
   gem 'capistrano-rails',   require: false
+  gem 'faker'
   gem 'letter_opener_web'
   gem 'listen'
   gem 'meta_request'

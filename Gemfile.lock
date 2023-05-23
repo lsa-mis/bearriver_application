@@ -134,6 +134,8 @@ GEM
     docile (1.4.0)
     erubi (1.10.0)
     erubis (2.7.0)
+    faker (3.2.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.4)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
@@ -382,6 +384,7 @@ DEPENDENCIES
   country_select (~> 4.0)
   database_cleaner
   devise
+  faker
   haml-rails
   jbuilder (~> 2.5)
   letter_opener_web
