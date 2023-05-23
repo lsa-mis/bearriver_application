@@ -77,6 +77,22 @@ class Application < ApplicationRecord
     user.total_paid
   end
 
+  def lodging_cost
+    Lodging.find_by(description: self.lodging_selection).cost.to_f 
+  end
+
+  def partner_registration_cost
+    self.partner_registration.cost.to_f
+  end
+
+  def total_cost
+    lodging_cost + partner_registration_cost
+  end
+
+  def balance_due
+    total_cost - total_user_has_paid
+  end
+
   def first_workshop_instructor
     Workshop.find(workshop_selection1).instructor
   end
@@ -104,7 +120,6 @@ class Application < ApplicationRecord
   scope :application_accepted, -> { active_conference_applications.where("offer_status = ?", "registration_accepted") }
 
   scope :application_offered, -> { active_conference_applications.where("offer_status = ? or offer_status = ?", "registration_offered", "special_offer_application") }
-
 
   scope :subscription_selected, -> { active_conference_applications.where("subscription = ?", true) }
 
