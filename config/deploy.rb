@@ -22,7 +22,7 @@ set :deploy_via,      :remote_cache
 set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :shared_path,     "#{fetch(:deploy_to)}/shared"
 # set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
-set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_ed25519.pub) }
+set :ssh_options,     { forward_agent: true }
 # Avoid permissions issues with using /tmp
 set :tmp_dir, '/home/deployer/tmp'
 
