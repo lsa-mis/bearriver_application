@@ -1,7 +1,0 @@
----
-reason: Bear River registration system is undergoing maintenance.
-allowed_paths: []
-allowed_ips:
-- 35.7.5.0/21
-response_code: 503
-retry_after: 7200
