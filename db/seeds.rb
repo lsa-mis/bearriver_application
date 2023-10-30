@@ -9,97 +9,69 @@
 
 Workshop.create!([
   {
-    instructor: 'Jerry Dennis',
-    first_name: 'Jerry',
-    last_name: 'Dennis'
+    instructor: "Jerry Dennis",
+    first_name: "Jerry",
+    last_name: "Dennis"
   },
   {
-    instructor: 'A. Van Jordan',
-    first_name: 'A.',
-    last_name: 'Jordan'
+    instructor: "A. Van Jordan",
+    first_name: "A.",
+    last_name: "Jordan"
   },
   {
-    instructor: 'Thomas Lynch',
-    first_name: 'Thomas',
-    last_name: 'Lynch'
+    instructor: "Thomas Lynch",
+    first_name: "Thomas",
+    last_name: "Lynch"
   },
   {
-    instructor: 'Richard Tillinghast',
-    first_name: 'Richard',
-    last_name: 'Tillinghast'
+    instructor: "Richard Tillinghast",
+    first_name: "Richard",
+    last_name: "Tillinghast"
   },
   {
-    instructor: 'Catherine Wing',
-    first_name: 'Catherine',
-    last_name: 'Wing'
+    instructor: "Catherine Wing",
+    first_name: "Catherine",
+    last_name: "Wing"
   },
   {
-    instructor: 'Desiree Cooper',
-    first_name: 'Desiree',
-    last_name: 'Cooper'
+    instructor: "Desiree Cooper",
+    first_name: "Desiree",
+    last_name: "Cooper"
   },
   {
-    instructor: 'V.V. (Sugi) Ganeshananthan',
-    first_name: 'V.V.',
-    last_name: 'Ganeshananthan'
+    instructor: "V.V. (Sugi) Ganeshananthan",
+    first_name: "V.V.",
+    last_name: "Ganeshananthan"
   },
   {
-    instructor: 'Mardi Link',
-    first_name: 'Mardi',
-    last_name: 'Link'
+    instructor: "Mardi Link",
+    first_name: "Mardi",
+    last_name: "Link"
   },
   {
-    instructor: 'Diane Seuss',
-    first_name: 'Diane',
-    last_name: 'Seuss'
+    instructor: "Diane Seuss",
+    first_name: "Diane",
+    last_name: "Seuss"
   },
   {
-    instructor: 'Douglas Trevor',
-    first_name: 'Douglas',
-    last_name: 'Trevor'
+    instructor: "Douglas Trevor",
+    first_name: "Douglas",
+    last_name: "Trevor"
   }
 ])
 
 Lodging.create!([
-  {
-    plan: 'A',
-    description: 'Private Room and Private Bath',
-    cost: '905.0'
-  },
-  {
-    plan: 'A',
-    description: 'Semi-Private Room and Shared Bath',
-    cost: '850.0'
-  },
-  {
-    plan: 'A',
-    description: 'Bunk Room',
-    cost: '740.0'
-  },
-  {
-    plan: 'B',
-    description: 'No Lodging',
-    cost: '645.0'
-  }
+  {plan: "A", description: "Private Room and Private Bath", cost: "905.0"},
+  {plan: "A", description: "Semi-Private Room and Shared Bath", cost: "850.0"},
+  {plan: "A", description: "Bunk Room", cost: "740.0"},
+  {plan: "B", description: "No Lodging", cost: "645.0"}
 ])
 
 PartnerRegistration.create!([
-  {
-    description: 'My spouse/partner will not be attending the workshops, but will attend the conference AND readings',
-    cost: '570.0'
-  },
-  {
-    description: 'My spouse/partner will not be attending the workshops, but will attend the conference',
-    cost: '440.0'
-  },
-  {
-    description: 'I am attending the conference alone.',
-    cost: '0.0'
-  },
-  {
-    description: 'My spouse/partner will be registering separately for the conference and workshops.',
-    cost: '0.0'
-  }
+  {description: "My spouse/partner will not be attending the workshops, but will attend the conference AND readings", cost: "570.0"},
+  {description: "My spouse/partner will not be attending the workshops, but will attend the conference", cost: "440.0"},
+  {description: "I am attending the conference alone.", cost: "0.0"},
+  {description: "My spouse/partner will be registering separately for the conference and workshops.", cost: "0.0"}
 ])
 
 ApplicationSetting.create!([
@@ -117,7 +89,7 @@ ApplicationSetting.create!([
     application_closed_directions: "<p>Thank you for your interest in Bear River. Unfortunately, the application is currently closed. The application period will reopen in April 2023. Please feel free to reach out with any questions to bearriver-questions@umich.edu.</p> <p></p>",
     registration_acceptance_directions: "<p>Dear Writer:</p> <p>Please log-in and pay the application fee to confirm your spot in the Bear River Writers' Conference. Again, if confirmation of payment is not received within 48 hours, we will forfeit the spot to the next person on the waitlist.</p> <p>Please feel free to reach out to bearriver-questions@umich.edu if you have any questions.</p> <p>We look forward to seeing you in the Spring!</p>",
     payments_directions: "<p>Dear Writer:</p> <p>Thank you for your Bear River Writers' Conference Application.</p> <p>Half of your Bear River Writers' Conference tuition is due by March 15, 2022. The remainder is due on April 30, 2022.</p> <p>Lastly, this year, conference registrants may add a Michigan Quarterly Review (MQR) subscription to their application. For $25 (a discounted rate for Bear River participants), you will receive 4 issues of MQR beginning July 1, 2022. Michigan Quarterly Review is an interdisciplinary and international literary journal, combining distinctive voices in poetry, fiction, and nonfiction, as well as works in translation. Writers are able to submit to MQR for publication.</p> <p>Please feel free to reach out to bearriver-questions@umich.edu if you have any questions.</p>",
-    balance_due_email_message:  "Balance due email message needs to be added.",
+    balance_due_email_message: "Balance due email message needs to be added.",
     subscription_directions: "<p>Subscribe to the Michigan Quarterly Review at a discounted rate.</p>",
     special_scholarship_acceptance_directions: "Special scholarship acceptance directions need to be added.",
     special_offer_invite_email: "Special offer invite email needs to be added.",
@@ -138,7 +110,7 @@ Gender.create!([
   }
 ])
 
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+AdminUser.create!(email: "admin@example.com", password: "password", password_confirmation: "password") if Rails.env.development?
 
 # create 132 users user the faker gem
 gender_type = ["Male", "Female"]
@@ -147,8 +119,8 @@ lodging_type = ["No Lodging", "Bunk Room", "Semi-Private Room and Shared Bath", 
 how_did_you_hear_type = ["Word of Mouth", "Magazine Advertisement", "Online Advertisement", "Newspaper Advertisement", "Other"]
 
 132.times do
-  user = User.create!(email: Faker::Internet.email, password: 'password', password_confirmation: 'password')
-  Application.create!( 
+  user = User.create!(email: Faker::Internet.email, password: "password", password_confirmation: "password")
+  Application.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     gender: gender_type.sample,
