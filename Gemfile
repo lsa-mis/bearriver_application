@@ -16,7 +16,6 @@ gem 'sassc', '~> 2.4'
 # Allows puma to use notify in systemd
 gem 'sd_notify', '~> 0.1.1'
 gem "skylight"
-gem 'turnout'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'webpacker', '~> 5.0'
 
@@ -25,7 +24,10 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'pry-rails'
   gem "pry-byebug"
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails'
+  gem "factory_bot_rails"
+  gem "webdrivers"
+  gem "faker"
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 end
@@ -34,9 +36,6 @@ group :development do
   gem 'annotate'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'capistrano',         require: false
-  gem 'capistrano-rails',   require: false
-  gem 'faker'
   gem 'letter_opener_web'
   gem 'listen'
   gem 'meta_request'
