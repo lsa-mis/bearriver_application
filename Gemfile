@@ -17,7 +17,8 @@ gem 'sassc', '~> 2.4'
 gem 'sd_notify', '~> 0.1.1'
 gem "skylight"
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'webpacker', '~> 5.0'
+# gem 'webpacker', '~> 5.0'
+gem 'webpacker'
 
 group :development, :test do
   gem "capybara"
