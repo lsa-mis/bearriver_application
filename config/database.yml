@@ -78,6 +78,13 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+
+staging:
+  <<: *default
+  database: bearriver_application_staging
+  username: <%= Rails.application.credentials.STAGING_DB_USERNAME %>
+  password: <%= Rails.application.credentials.STAGING_DB_PASSWORD %>
+
 production:
   <<: *default
   database: bearriver_application_production
