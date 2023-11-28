@@ -9,7 +9,7 @@ gem 'country_select', '~> 4.0'
 gem 'devise'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.5'
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'pg', '~> 1.5', '>= 1.5.4'
 gem 'puma', '~> 5.6'
 gem 'rails', '~> 6.0.3.5'
 gem 'sassc', '~> 2.4'
@@ -27,7 +27,7 @@ group :development, :test do
   gem "pry-byebug"
   gem 'rspec-rails'
   gem "factory_bot_rails"
-  gem "webdrivers"
+  gem "webdrivers", "= 5.3.0"
   gem "faker"
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
