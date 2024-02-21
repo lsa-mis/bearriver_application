@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+=======
+Rails.application.configure do
+  # Verifies that versions and hashed value of the package contents in the project's package.json
+  #config.webpacker.check_yarn_integrity = false
+>>>>>>> Stashed changes
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -22,7 +28,11 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
+<<<<<<< Updated upstream
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+=======
+  config.public_file_server.enabled = true
+>>>>>>> Stashed changes
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -31,6 +41,7 @@ Rails.application.configure do
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+<<<<<<< Updated upstream
   # config.asset_host = "http://assets.example.com"
 
   # Specifies the header that your server uses for sending files.
@@ -50,6 +61,37 @@ Rails.application.configure do
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
+=======
+  # config.action_controller.asset_host = 'http://assets.example.com'
+
+  # Specifies the header that your server uses for sending files.
+  # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
+  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+
+  # Store uploaded files on the local file system (see config/storage.yml for options)
+  config.active_storage.service = :local
+
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # config.force_ssl = true
+
+
+  # According to Rails Documentation, available log levels are:
+  # :debug, :info, :warn, :error, :fatal, and :unknown.
+  # Corresponding to these log level we can use numbers from 0 to 5 respectively.
+  #
+  # To set the log level, use
+  # config.log_level = :warn  #use on production for a stable release
+  # or
+  #
+  # Rails.logger.level = 0   # for debug
+  # Generally the logfiles in production can be use at debug level but once you release or get to a stable version, since we do not want our logfiles to flood our space, we should move it to :warn or :error log level
+  #
+  # config.log_level = :error  #use on production for a stable release
+  # For more info you can check documentation here
+
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+>>>>>>> Stashed changes
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
@@ -58,6 +100,7 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
+<<<<<<< Updated upstream
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "art_survey_production"
@@ -74,11 +117,30 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+=======
+  # Use a real queuing backend for Active Job (and separate queues per environment)
+  # config.active_job.queue_adapter     = :resque
+  # config.active_job.queue_name_prefix = "bearriver_application_#{Rails.env}"
+
+  host = 'http://localhost:3000'
+  # on staging use host = 'http://STAGING SERVER NAME'
+    config.action_mailer.default_url_options = { host: host }
+  
+    # Don't care if the mailer can't send.
+    config.action_mailer.raise_delivery_errors = true
+  
+    config.action_mailer.perform_caching = false
+  
+    #letter_opener settings
+    config.action_mailer.delivery_method = :letter_opener_web
+    config.action_mailer.perform_deliveries = true
+>>>>>>> Stashed changes
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
+<<<<<<< Updated upstream
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
@@ -88,6 +150,18 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
+=======
+  # Send deprecation notices to registered listeners.
+  config.active_support.deprecation = :notify
+
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  # config.log_formatter = ::Logger::Formatter.new
+  # config.log_formatter = ::NewRelic::Agent::Logging::DecoratingFormatter.new
+
+  # Use a different logger for distributed setups.
+  # require 'syslog/logger'
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+>>>>>>> Stashed changes
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
@@ -97,6 +171,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+<<<<<<< Updated upstream
 
   config.skylight.environments << "staging"
+=======
+>>>>>>> Stashed changes
 end
