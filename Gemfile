@@ -11,7 +11,7 @@ gem 'haml-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 5.6'
-gem 'rails', '~> 6.0.3.5'
+gem 'rails', '~> 6.1.7.7'
 gem 'sassc', '~> 2.4'
 # Allows puma to use notify in systemd
 gem 'sd_notify', '~> 0.1.1'
